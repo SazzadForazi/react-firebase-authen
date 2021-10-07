@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+import initializeAuthentication from './Firebase/firebase.init';
+initializeAuthentication();
+const googlProvider = new GoogleAuthProvider();
 
 function App() {
+  const auth = getAuth();
+
+  const handleGoogleSignIn = () => {
+    signInWithPopup(auth, googlProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+
+      })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={handleGoogleSignIn}>Google Sign In</button>
     </div>
   );
 }
